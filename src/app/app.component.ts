@@ -26,6 +26,14 @@ export class AppComponent implements OnInit {
       // 'hobbies': new FormArray([new FormControl(null)])
       'hobbies': new FormArray([]),
     });
+    /* Every time an input change is values it prints in the console the signupForm values */
+    // this.signupForm.valueChanges.subscribe(
+    //   (value) => console.log(value)
+    // );
+    /* Check Status of the validation each time the elements change values */
+    this.signupForm.statusChanges.subscribe(
+      (status) => console.log(status)
+    );
   }
 
   onSubmit() {
