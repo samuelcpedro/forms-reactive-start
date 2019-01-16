@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +14,8 @@ export class AppComponent implements OnInit {
     // Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     // Add 'implements OnInit' to the class.
     this.signupForm = new FormGroup({
-      'username': new FormControl(null),
-      'email': new FormControl(null),
+      'username': new FormControl(null, Validators.required), /* required and email are functions so dont put () or it will be executed */
+      'email': new FormControl(null, [Validators.required, Validators.email]),
       'gender': new FormControl('male')
     });
   }
