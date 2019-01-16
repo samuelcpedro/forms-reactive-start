@@ -35,7 +35,12 @@
             <input type="text" class="form-control" [formControlName]="i">
           </div>
         </div>
-        <span class="help-block" *ngIf="!signupForm.valid && signupForm.touched">Please enter valid data!</span>
+        <span class="help-block" *ngIf="!signupForm.valid && signupForm.touched">
+          <!-- <span *ngIf="signupForm.get('userData.username').errors['nameIsForbidden']">This name is invalid"</span> -->
+          <!-- <span *ngIf="signupForm.get('userData.username').errors['required']">This name is required"</span> -->
+          <span *ngIf="signupForm.get('userData.username').hasError('nameIsForbidden')">This name is invalid"</span>
+          <span *ngIf="signupForm.get('userData.username').hasError('required')">This name is required"</span>
+        </span>
         <button class="btn btn-primary" type="submit">Submit</button>
       </form>
     </div>
