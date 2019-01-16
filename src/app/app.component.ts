@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,7 @@ export class AppComponent implements OnInit {
       'userData': new FormGroup({
         /* we need to bind this because the validation function is called by angular no by this class */
         'username': new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]),
-        'email': new FormControl(null, [Validators.required, Validators.email]),
+        'email': new FormControl(null, [Validators.required, Validators.email], this.forbiddenEmails.bind(this)),
         /* required and email are functions so dont put () or it will be executed */
       }),
       'gender': new FormControl('male'),
@@ -48,5 +49,18 @@ export class AppComponent implements OnInit {
     }
     return null;
     /* If successfull we should return nothing or null never pass { 'nameIsForbidden': false } */
+  }
+
+  forbiddenEmails(control: FormControl): Promise<any> | Observable<any> {
+    const promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (control.value === 'test@test.com') {
+          resolve({'emailIsForbidden': true});
+        } else {
+          resolve(null);
+        }
+      }, 1500);
+    });
+    return promise;
   }
 }
